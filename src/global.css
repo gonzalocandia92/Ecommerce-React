@@ -1,4 +1,14 @@
-:root {
-  padding: 3rem;
-  --primary-color: #ff0932;
+#root {
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  --primary-color: crimson;
+
+}
+
+body {
+  background-color: #131313;
+  color: whitesmoke; 
 }
