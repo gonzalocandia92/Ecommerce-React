@@ -1,6 +1,9 @@
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
+import Loader from '../../components/Loader';
+import Error from '../../components/Error';
+
 
 interface Category {
   id: number;
@@ -21,12 +24,11 @@ const App = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader/>
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+    return <Error message={error.message} />;  }
 
   return (
     <div className={styles.categoryList}>
