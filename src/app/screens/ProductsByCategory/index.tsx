@@ -67,19 +67,22 @@ const ProductsByCategory: React.FC = () => {
   return (
     <div className={styles.categoryList}>
       <h2>Products by Category: {categoryId}</h2>
-      <div className={styles.categoryCards}>
-        {currentProducts?.map((product) => (
-          <div key={product.id} className={styles.categoryCard}>
-            {product.images.length > 0 && (
-              <img src={product.images[0]} alt={product.title} className={styles.cardImage} />
-            )}
-            <h3>{product.title}</h3>
-            <p>Price: {product.price}</p>
-            <p>Description: {product.description}</p>
-          </div>
-        ))}
-      </div>
-      <div className={styles.pagination}>
+      {currentProducts && currentProducts.length > 0 ? (
+        <>
+        <div className={styles.categoryCards}>
+          {currentProducts.map((product) => (
+            <div key={product.id} className={styles.categoryCard}>
+              {product.images.length > 0 && (
+                <img src={product.images[0]} alt={product.title} className={styles.cardImage} />
+              )}
+              <h3>{product.title}</h3>
+              <p>Price: {product.price}</p>
+              <p>Description: {product.description}</p>
+            </div>
+          ))}
+        </div>
+        
+        <div className={styles.pagination}>
         {/* Pagination */}
         <button
           onClick={() => handlePageChange(currentPage - 1)}
@@ -97,6 +100,13 @@ const ProductsByCategory: React.FC = () => {
           {">"}
         </button>
       </div>
+        </>
+      ) : (
+        <h1 className={styles.noProductsMessage}>
+          Los sentimos, nos quedamos sin stock de productos para la categoría seleccionada.
+        </h1>
+      )}
+      
     </div>
   );
 };
