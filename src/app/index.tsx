@@ -1,9 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./screens/Home";
-import Detail from "./screens/Detail";
+// import Categories from "./screens/Categories";
+// import Products from "./screens/Products";
+// import ProductDetail from "./screens/ProductDetail";
+// import Login from "./screens/Login";
+// import Register from "./screens/Register";
+// import ProductCreate from "./screens/ProductCreate";
+// import ProductEdit from "./screens/ProductEdit";
+// import CartDetail from "./screens/CartDetail";
 import NotFound from "./screens/NotFound";
 import Layout from "./components/Layout";
 import { QueryClient, QueryClientProvider } from "react-query";
+import ProductsByCategory from "./screens/ProductsByCategory";
 
 const queryClient = new QueryClient();
 
@@ -14,7 +22,15 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/category/:categoryId/products" element={<ProductsByCategory />} />
+            {/* <Route path="/categories" element={<Categories />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/products/create" element={<ProductCreate />} />
+            <Route path="/products/edit/:id" element={<ProductEdit />} />
+            <Route path="/cart-detail" element={<CartDetail />} /> */}
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
