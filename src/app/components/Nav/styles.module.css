@@ -1,6 +1,6 @@
 /* Estilos generales del navbar */
 .navbar {
-  background-color: #333;
+  background-color: #0303034d;
   padding: 10px;
   color: #fff;
   display: flex;
@@ -20,6 +20,11 @@
   width: auto;
   height: 50px;
   margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+.logoImg:hover {
+  transform: scale(1.5);
 }
 
 ul {
@@ -39,6 +44,10 @@ li {
 a {
   color: #fff;
   text-decoration: none;
+}
+
+a:hover {
+  color:cadetblue;
 }
 
 /* Media queries para hacer el navbar responsive */
