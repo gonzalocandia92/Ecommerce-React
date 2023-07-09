@@ -15,13 +15,13 @@ return (
           <Link to="/">Home</Link>
       </li>
       <li>
-        <Link to="/personajes">Personajes</Link>
+        <Link to="/categories">Categories</Link>
       </li>
       <li>
-        <Link to="/ubicaciones">Ubicaciones</Link>
+        <Link to="/products">Products</Link>
       </li>
       <li>
-        <Link to="/episodios">Episodios</Link>
+        <Link to="/about">About</Link>
       </li>
     </ul>
   </nav>
