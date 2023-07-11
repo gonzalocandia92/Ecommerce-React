@@ -44,7 +44,7 @@ const fetchProductsByCategory = async (categoryId: string) => {
 const ProductsByCategory: React.FC = () => {
   const { categoryId } = useParams<RouteParams>();
   const { data, isLoading, error } = useQuery<Product[]>(["products", categoryId], () =>
-    fetchProductsByCategory(categoryId)
+    fetchProductsByCategory(categoryId || '')
   );
 
   const [currentPage, setCurrentPage] = useState(1);
