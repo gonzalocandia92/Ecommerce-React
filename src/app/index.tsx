@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Categories from "./screens/Categories";
-// import Products from "./screens/Products";
+import Products from "./screens/Products";
 // import ProductDetail from "./screens/ProductDetail";
 // import Login from "./screens/Login";
 // import Register from "./screens/Register";
@@ -25,8 +24,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:categoryId/products" element={<ProductsByCategory />} />
-            {/* <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/products" element={<Products />} />
+            {/* <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/products/create" element={<ProductCreate />} />
