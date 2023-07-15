@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import styles from "./styles.module.css";
 
-const LoginUser: React.FC = () => {
+interface LoginUserProps {
+  setLoggedIn: (loggedIn: boolean) => void;
+}
+
+const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -40,8 +46,13 @@ const LoginUser: React.FC = () => {
 
       const data = await response.json();
       localStorage.setItem("accessToken", data.access_token);
-      navigate("/products");
+      setLoggedIn(true); // Actualiza el estado loggedIn a true
 
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        // Si el usuario ya está logueado, redirige al usuario a la página principal
+        navigate("/");
+      }
     } catch (error) {
       setError(error.message || "Login failed");
     } finally {
@@ -52,21 +63,28 @@ const LoginUser: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2>Login</h2>
-      {loading && <Loader />}
-      {error && <Error message={error} />}
-      <form className={styles.form}>
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Email</label>
-          <input className={styles.input} type="email" value={email} onChange={handleEmailChange} />
-        </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.inputLabel}>Password</label>
-          <input className={styles.input} type="password" value={password} onChange={handlePasswordChange} />
-        </div>
-        <button className={styles.button} type="button" onClick={handleLogin}>
-          Login
-        </button>
-      </form>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {error && <Error message={error} />}
+          {!error && (
+            <form className={styles.form}>
+              <div className={styles.inputContainer}>
+                <label className={styles.inputLabel}>Email</label>
+                <input className={styles.input} type="email" value={email} onChange={handleEmailChange} />
+              </div>
+              <div className={styles.inputContainer}>
+                <label className={styles.inputLabel}>Password</label>
+                <input className={styles.input} type="password" value={password} onChange={handlePasswordChange} />
+              </div>
+              <button className={styles.button} type="button" onClick={handleLogin}>
+                Login
+              </button>
+            </form>
+          )}
+        </>
+      )}
     </div>
   );
 };
