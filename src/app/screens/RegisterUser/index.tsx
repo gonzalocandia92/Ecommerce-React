@@ -66,7 +66,7 @@ const RegisterUser: React.FC = () => {
       const loginData = await loginResponse.json();
       localStorage.setItem("accessToken", loginData.access_token);
 
-      navigate("/");
+      navigate("/products");
     } catch (error) {
       setError(error.message || "Registration failed");
     } finally {
