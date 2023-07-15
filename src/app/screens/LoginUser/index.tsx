@@ -38,8 +38,7 @@ const LoginUser: React.FC = () => {
 
       const data = await response.json();
       localStorage.setItem("accessToken", data.access_token);
-      navigate("/");
-      console.log('Usuario logueado');
+      navigate("/products");
 
     } catch (error) {
         return <Error message={(error as Error).message} />;
