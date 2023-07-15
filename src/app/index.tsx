@@ -12,6 +12,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ProductsByCategory from "./screens/ProductsByCategory";
 import Categories from "./screens/Categories";
 import Home from "./screens/Home";
+import LoginUser from "./screens/LoginUser";
+import RegisterUser from "./screens/RegisterUser";
 
 const queryClient = new QueryClient();
 
@@ -25,9 +27,9 @@ function App() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:categoryId/products" element={<ProductsByCategory />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/login" element={<LoginUser />} />
+            <Route path="/register" element={<RegisterUser />} />
             {/* <Route path="/products/:id" element={<ProductDetail />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
             <Route path="/products/create" element={<ProductCreate />} />
             <Route path="/products/edit/:id" element={<ProductEdit />} />
             <Route path="/cart-detail" element={<CartDetail />} /> */}
