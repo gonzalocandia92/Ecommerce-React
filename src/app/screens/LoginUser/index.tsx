@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
+import styles from "./styles.module.css";
 
 const LoginUser: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -33,35 +34,36 @@ const LoginUser: React.FC = () => {
       });
 
       if (!response.ok) {
-        return <Error message={(error as unknown as Error).message} />;
-    }
+        const errorMessage = "Failed to login";
+        throw new Error(errorMessage);
+      }
 
       const data = await response.json();
       localStorage.setItem("accessToken", data.access_token);
       navigate("/products");
 
     } catch (error) {
-        return <Error message={(error as Error).message} />;
+      setError(error.message || "Login failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h2>Login</h2>
       {loading && <Loader />}
       {error && <Error message={error} />}
-      <form>
-        <div>
-          <label>Email</label>
-          <input type="email" value={email} onChange={handleEmailChange} />
+      <form className={styles.form}>
+        <div className={styles.inputContainer}>
+          <label className={styles.inputLabel}>Email</label>
+          <input className={styles.input} type="email" value={email} onChange={handleEmailChange} />
         </div>
-        <div>
-          <label>Password</label>
-          <input type="password" value={password} onChange={handlePasswordChange} />
+        <div className={styles.inputContainer}>
+          <label className={styles.inputLabel}>Password</label>
+          <input className={styles.input} type="password" value={password} onChange={handlePasswordChange} />
         </div>
-        <button type="button" onClick={handleLogin}>
+        <button className={styles.button} type="button" onClick={handleLogin}>
           Login
         </button>
       </form>
