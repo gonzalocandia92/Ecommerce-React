@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
-import Error from "../../components/Error";
+import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
 
 interface LoginUserProps {
@@ -67,7 +67,7 @@ const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
         <Loader />
       ) : (
         <>
-          {error && <Error message={error} />}
+          {error && <ErrorMessage message={error} />}
           {!error && (
             <form className={styles.form}>
               <div className={styles.inputContainer}>

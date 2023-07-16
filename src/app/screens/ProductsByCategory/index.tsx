@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
-import Error from "../../components/Error";
+import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
@@ -55,7 +55,7 @@ const ProductsByCategory: React.FC = () => {
   }
 
   if (error) {
-    return <Error message={(error as Error).message} />;
+    return <ErrorMessage message={(error as Error).message} />;
   }
 
   // Calculating pagination

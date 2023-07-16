@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
-import Error from "../../components/Error";
+import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
 
 interface RegisterUserProps {
@@ -64,51 +64,57 @@ const RegisterUser: React.FC<RegisterUserProps> = ({ setLoggedIn }) => {
   return (
     <div className={`${styles.container} ${styles.dark}`}>
       <h2>Register</h2>
-      {loading && <Loader />}
-      {error && <Error message={error} />}
-      <form>
-        <div className={styles.inputContainer}>
-          <label htmlFor="name" className={styles.inputLabel}>
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={handleNameChange}
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="email" className={styles.inputLabel}>
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="password" className={styles.inputLabel}>
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-            className={styles.input}
-          />
-        </div>
-        <button type="button" onClick={handleRegister} className={styles.button}>
-          Register
-        </button>
-      </form>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {error && <ErrorMessage message={error} />}
+          {!error && (
+            <form>
+              <div className={styles.inputContainer}>
+                <label htmlFor="name" className={styles.inputLabel}>
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={handleNameChange}
+                  className={styles.input}
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <label htmlFor="email" className={styles.inputLabel}>
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  className={styles.input}
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <label htmlFor="password" className={styles.inputLabel}>
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  className={styles.input}
+                />
+              </div>
+              <button type="button" onClick={handleRegister} className={styles.button}>
+                Register
+              </button>
+            </form>
+          )}
+        </>
+      )}
     </div>
   );
 };
-
 export default RegisterUser;

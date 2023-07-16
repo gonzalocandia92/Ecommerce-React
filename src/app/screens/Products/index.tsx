@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
-import Error from "../../components/Error";
+import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
@@ -93,7 +93,7 @@ const ProductListView: React.FC = () => {
   }
 
   if (categoriesError || productsError) {
-    return <Error message={(categoriesError || productsError).message} />;
+    return <ErrorMessage message={(categoriesError || productsError).message} />;
   }
 
   const filteredProducts = productsData || [];
