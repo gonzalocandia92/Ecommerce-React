@@ -4,7 +4,11 @@ import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import styles from "./styles.module.css";
 
-const RegisterUser: React.FC = () => {
+interface RegisterUserProps {
+  setLoggedIn: (loggedIn: boolean) => void;
+}
+
+const RegisterUser: React.FC<RegisterUserProps> = ({ setLoggedIn }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,27 +50,10 @@ const RegisterUser: React.FC = () => {
       }
 
       const data = await response.json();
+      localStorage.setItem("accessToken", data.access_token);
+      setLoggedIn(true); // Actualiza el estado loggedIn a true
 
-      const loginResponse = await fetch("https://api.escuelajs.co/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-
-      if (!loginResponse.ok) {
-        const errorMessage = "Failed to login";
-        throw new Error(errorMessage);
-      }
-
-      const loginData = await loginResponse.json();
-      localStorage.setItem("accessToken", loginData.access_token);
-
-      navigate("/products");
+      navigate("/"); // Redirige al usuario a la página principal
     } catch (error) {
       setError(error.message || "Registration failed");
     } finally {

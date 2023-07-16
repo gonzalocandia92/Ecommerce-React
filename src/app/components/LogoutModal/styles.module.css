@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(2, 0, 20, 0.898);
   }
   
   .modalContent {
@@ -28,6 +28,7 @@
     padding: 2rem;
     border-radius: 4px;
     text-align: center;
+    color: black;
   }
   
   h3 {

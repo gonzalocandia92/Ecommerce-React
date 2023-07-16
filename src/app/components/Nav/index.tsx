@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+import LogoutModal from "../LogoutModal";
 
 interface NavProps {
   loggedIn: boolean;
@@ -8,13 +9,21 @@ interface NavProps {
 }
 
 const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const navigate = useNavigate();
 
+  const handleOpenLogoutModal = () => {
+    setShowLogoutModal(true);
+  };
+
+  const handleCloseLogoutModal = () => {
+    setShowLogoutModal(false);
+  };
+
   const handleLogout = () => {
-    // Realiza las acciones necesarias para cerrar la sesión
     localStorage.removeItem("accessToken");
     setLoggedIn(false);
-    navigate("/");
+    setShowLogoutModal(false);
   };
 
   return (
@@ -39,7 +48,9 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
           <span>Account</span>
           <ul className={styles.dropdownContent}>
             {loggedIn ? (
-              <li className={styles.button} onClick={handleLogout}>Logout</li>  
+              <li className={styles.button} onClick={handleOpenLogoutModal}>
+                Logout
+              </li>
             ) : (
               <>
                 <li>
@@ -53,6 +64,13 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
           </ul>
         </li>
       </ul>
+
+      {showLogoutModal && (
+        <LogoutModal
+          handleLogout={handleLogout}
+          handleCloseModal={handleCloseLogoutModal}
+        />
+      )}
     </nav>
   );
 };
