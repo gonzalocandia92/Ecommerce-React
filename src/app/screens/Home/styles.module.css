@@ -27,7 +27,6 @@ p {
   border-radius: 4px;
   font-size: 16px;
   text-decoration: none;
-  cursor: pointer;
 }
 
 .browseButton:hover {
