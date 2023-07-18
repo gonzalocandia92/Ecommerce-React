@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import Loader from "../../components/Loader";
-import Error from "../../components/Error";
+import ErrorMessage from "../../components/Error";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
 
@@ -30,7 +30,7 @@ const Categories = () => {
   }
 
   if (error) {
-    return <Error message={(error as Error).message} />;
+    return <ErrorMessage message={(error as Error).message} />;
   }
 
   return (
