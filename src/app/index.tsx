@@ -10,6 +10,7 @@ import Home from './screens/Home';
 import LoginUser from './screens/LoginUser';
 import RegisterUser from './screens/RegisterUser';
 import { PrivateRoute } from './components/PrivateRoute';
+import { AdminRoute } from './components/AdminRoute';
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,16 @@ function App() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:categoryId/products" element={<ProductsByCategory />} />
             <Route path="/products" element={<Products />} />
+
+            <Route
+              path="/productodeadmin"
+              element={
+              <AdminRoute>
+                <Products />
+              </AdminRoute>
+              }
+            />
+
             <Route
               path="/login"
               element={
@@ -42,7 +53,8 @@ function App() {
                 </PrivateRoute>
               }
             />
-       <Route
+            
+            <Route
               path="/register"
               element={
                 <PrivateRoute>

@@ -3,14 +3,18 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 
 interface LogoutModalProps {
-  handleLogout: () => void;
+  setLoggedIn: (loggedIn: boolean) => void;
+  handleCloseModal: () => void;
 }
 
-const LogoutModal: React.FC<LogoutModalProps> = ({ handleLogout }) => {
+const LogoutModal: React.FC<LogoutModalProps> = ({ setLoggedIn, handleCloseModal }) => {
   const navigate = useNavigate();
 
   const handleConfirmLogout = () => {
-    handleLogout();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userData");
+    setLoggedIn(false);
+    handleCloseModal();
     navigate("/");
   };
 
@@ -20,7 +24,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ handleLogout }) => {
         <h3>Confirm Logout</h3>
         <p>Are you sure you want to logout?</p>
         <div className={styles.modalButtons}>
-          <button className={styles.cancelButton} onClick={navigate.goBack}>
+          <button className={styles.cancelButton} onClick={handleCloseModal}>
             Cancel
           </button>
           <button className={styles.logoutConfirmButton} onClick={handleConfirmLogout}>

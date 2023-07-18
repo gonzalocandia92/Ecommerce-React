@@ -7,24 +7,28 @@ interface NavProps {
   loggedIn: boolean;
   setLoggedIn: (loggedIn: boolean) => void;
 }
+interface UserData {
+  id: number;
+  email: string;
+  name: string;
+  role: string;
+}
 
 const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const navigate = useNavigate();
 
   const handleOpenLogoutModal = () => {
     setShowLogoutModal(true);
   };
 
-  const handleCloseLogoutModal = () => {
+  const handleCloseModal = () => {
     setShowLogoutModal(false);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    setLoggedIn(false);
-    setShowLogoutModal(false);
-  };
+
+  const storedUserData = localStorage.getItem("userData");
+  const userData: UserData | null = storedUserData ? JSON.parse(storedUserData) : null;
+  
 
   return (
     <nav className={styles.navbar}>
@@ -43,14 +47,27 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
         <li>
           <Link to="/products">Products</Link>
         </li>
+        
+        
+
+
 
         <li className={styles.dropdown}>
-          <span>Account</span>
+        { userData ? ( 
+          <span className={styles.username}>
+                  {userData.name}
+          </span>
+          ) : (
+          <span>My account</span>
+        )}
+
           <ul className={styles.dropdownContent}>
             {loggedIn ? (
-              <li className={styles.button} onClick={handleOpenLogoutModal}>
-                Logout
-              </li>
+              <>
+                <li className={styles.button} onClick={handleOpenLogoutModal}>
+                  Logout
+                </li>
+              </>
             ) : (
               <>
                 <li>
@@ -67,8 +84,8 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
 
       {showLogoutModal && (
         <LogoutModal
-          handleLogout={handleLogout}
-          handleCloseModal={handleCloseLogoutModal}
+          setLoggedIn={setLoggedIn}
+          handleCloseModal={handleCloseModal}
         />
       )}
     </nav>

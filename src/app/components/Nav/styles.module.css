@@ -72,6 +72,10 @@ a:hover {
   }
 }
 
+.username {
+  color: rgb(0, 255, 170);
+}
+
 .dropdown {
   position: relative;
   color: antiquewhite;
