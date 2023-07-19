@@ -16,9 +16,8 @@ export function AdminRoute({ children }: AdminRouteProps) {
     const storedUserData = localStorage.getItem("userData");
     const userData: UserData | null = storedUserData ? JSON.parse(storedUserData) : null;
 
-    if (userData?.role === 'admin' && loggedIn) {
-        return <>{children}</>;
-    } else {
-        return <><ErrorMessage message="Apparently you don't have permission to access this page." /></>;
-    }; 
-};
+    return (userData?.role === 'admin' && loggedIn) ? (
+        <>{children}</> ) : (
+        <><ErrorMessage message="Apparently you don't have permission to access this page." /></>
+        )}; 
+

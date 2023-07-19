@@ -39,7 +39,11 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
       </Link>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+        { userData?.role ==='admin' ? ( 
+            <Link to="/dashboard">Dashboard</Link>
+          ) : (
+            <Link to="/">Home</Link> )
+        }
         </li>
         <li>
           <Link to="/categories">Categories</Link>
@@ -47,10 +51,6 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
         <li>
           <Link to="/products">Products</Link>
         </li>
-        
-        
-
-
 
         <li className={styles.dropdown}>
         { userData ? ( 
