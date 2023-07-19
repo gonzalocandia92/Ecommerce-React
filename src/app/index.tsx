@@ -13,6 +13,7 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { AdminRoute } from './components/AdminRoute';
 import Dashboard from './screens/Dashboard';
 import CreateCategory from './screens/CreateCategory';
+import CreateProduct from './screens/CreateProduct';
 
 const queryClient = new QueryClient();
 
@@ -56,7 +57,7 @@ function App() {
 
           <Route path="/products/create"  element={ 
               <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}>
-                <Products />
+                <CreateProduct />
               </Dashboard></></AdminRoute>}>
           </Route>
 
