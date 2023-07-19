@@ -37,51 +37,52 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
           <img src="/logo.png" alt="Logo" className={styles.logoImg} />
         </div>
       </Link>
-      <ul>
-        <li>
-        { userData?.role ==='admin' ? ( 
-            <Link to="/dashboard">Dashboard</Link>
-          ) : (
-            <Link to="/">Home</Link> )
-        }
-        </li>
-        <li>
-          <Link to="/categories">Categories</Link>
-        </li>
-        <li>
-          <Link to="/products">Products</Link>
-        </li>
-
-        <li className={styles.dropdown}>
-        { userData ? ( 
-          <span className={styles.username}>
-                  {userData.name}
-          </span>
-          ) : (
-          <span>My account</span>
-        )}
-
-          <ul className={styles.dropdownContent}>
-            {loggedIn ? (
-              <>
-                <li className={styles.button} onClick={handleOpenLogoutModal}>
-                  Logout
-                </li>
-              </>
+      <div className={styles.menu}>
+        <ul>
+          <li>
+          { userData?.role ==='admin' ? ( 
+              <Link to="/dashboard">Dashboard</Link>
             ) : (
-              <>
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-                <li>
-                  <Link to="/register">Register</Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </li>
-      </ul>
+              <Link to="/">Home</Link> )
+          }
+          </li>
+          <li>
+            <Link to="/categories">Categories</Link>
+          </li>
+          <li>
+            <Link to="/products">Products</Link>
+          </li>
 
+          <li className={styles.dropdown}>
+          { userData ? ( 
+            <span className={styles.username}>
+                    {userData.name}
+            </span>
+            ) : (
+            <span>My account</span>
+          )}
+
+            <ul className={styles.dropdownContent}>
+              {loggedIn ? (
+                <>
+                  <li className={styles.button} onClick={handleOpenLogoutModal}>
+                    Logout
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/login">Login</Link>
+                  </li>
+                  <li>
+                    <Link to="/register">Register</Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </li>
+        </ul>
+      </div>
       {showLogoutModal && (
         <LogoutModal
           setLoggedIn={setLoggedIn}
