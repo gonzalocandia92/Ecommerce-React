@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import useCreateCategory from "../../hooks/useCreateCategory";
 import styles from "./styles.module.css";
+import Loader from "../../components/Loader";
 
 const CreateCategory: React.FC = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const createCategoryMutation = useCreateCategory({ setError, setSuccess });
+  const { createCategoryMutation, isLoading } = useCreateCategory({ setError, setSuccess });
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -31,9 +32,16 @@ const CreateCategory: React.FC = () => {
     <div className={styles.container}>
       <h2>Create Category</h2>
       {error && <p>{error}</p>}
-      
-      {success ? (
-        <p>{success}</p>
+
+      {isLoading ? (
+        <Loader />
+      ) : success ? (
+        <React.Fragment>
+          <p>{success}</p>
+          <button type="button" className={styles.button} onClick={handleAddAnotherCategory}>
+            Add another category
+          </button>
+        </React.Fragment>
       ) : (
         <form className={styles.form} onSubmit={handleSubmit}>
           <div>
@@ -44,12 +52,10 @@ const CreateCategory: React.FC = () => {
             <label htmlFor="image">Image URL</label>
             <input type="text" id="image" value={image} onChange={handleImageChange} />
           </div>
-          <button type="submit" className={styles.button}>Create Category</button>
+          <button type="submit" className={styles.button}>
+            Create Category
+          </button>
         </form>
-      )}
-
-      {success && (
-        <button type="button" className={styles.button} onClick={handleAddAnotherCategory}>Add another category</button>
       )}
     </div>
   );
