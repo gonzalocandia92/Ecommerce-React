@@ -1,4 +1,3 @@
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import Loader from "../../components/Loader";
@@ -6,14 +5,6 @@ import ErrorMessage from "../../components/Error";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
 import useCategories from "../../hooks/useCategories";
-
-interface Category {
-  id: number;
-  name: string;
-  image: string;
-  creationAt: string;
-  updatedAt: string;
-}
 
 const Categories = () => {
   const { data, isLoading, error } = useCategories();

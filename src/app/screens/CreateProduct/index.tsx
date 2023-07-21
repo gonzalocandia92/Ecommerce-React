@@ -1,51 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useCreateProduct from "../../hooks/useCreateProduct";
+import useCategories from "../../hooks/useCategories";
 import styles from "./styles.module.css";
-
-interface Category {
-  id: number;
-  name: string;
-  image: string;
-}
-
-interface ProductResponse {
-  title: string;
-  price: number;
-  description: string;
-  images: string[];
-  category: Category;
-  id: number;
-  creationAt: string;
-  updatedAt: string;
-}
+import Loader from "../../components/Loader";
+import ErrorMessage from "../../components/Error";
 
 const CreateProduct: React.FC = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState(0);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const createProductMutation = useCreateProduct(setError, setSuccess);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("https://api.escuelajs.co/api/v1/categories");
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useCategories();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -100,7 +70,7 @@ const CreateProduct: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2>Create Product</h2>
-      {error && <p>{error}</p>}
+      {error ? <ErrorMessage message={error} /> : null}
       {success ? (
         <p>{success}</p>
       ) : (
@@ -119,14 +89,19 @@ const CreateProduct: React.FC = () => {
           </div>
           <div>
             <label htmlFor="category">Category:</label>
-            <select id="category" value={categoryId} onChange={handleCategoryChange}>
-              <option value={0}>Select a category</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
+            {isLoadingCategories ? (
+              <Loader />
+            ) : (
+              <select id="category" value={categoryId} onChange={handleCategoryChange}>
+                <option value={0}>Select a category</option>
+                {categories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            )}
+            {categoriesError && <ErrorMessage message={categoriesError.message} />}
           </div>
           <div>
             <label>Image URLs:</label>
@@ -148,6 +123,7 @@ const CreateProduct: React.FC = () => {
         </form>
       )}
 
+      {createProductMutation.isLoading && <Loader />}
       {success && (
         <button type="button" className={styles.button} onClick={handleAddAnotherProduct}>
           Add another product

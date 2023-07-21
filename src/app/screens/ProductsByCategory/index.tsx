@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
@@ -11,25 +10,6 @@ import useProducts from "../../hooks/useProducts";
 interface RouteParams {
   categoryId: string;
   [key: string]: string | undefined;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  images: string[];
-  createdAt: string;
-  updatedAt: string;
-  category: Category;
 }
 
 const ProductsByCategory: React.FC = () => {
