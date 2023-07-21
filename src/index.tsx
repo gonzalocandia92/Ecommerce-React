@@ -1,15 +1,28 @@
+// import App from "./app";
+// import { QueryClient, QueryClientProvider } from "react-query";
+// import { ReactQueryDevtools } from "react-query/devtools";
+// import "./global.css";
+// import { createRoot } from 'react-dom/client';
+
+
+// const queryClient = new QueryClient();
+
+// createRoot(document.getElementById('root')).render(
+//   <QueryClientProvider client={queryClient}>
+//     <App />
+//     <ReactQueryDevtools initialIsOpen={false} />
+//   </QueryClientProvider>,
+//   document.getElementById("root")
+// );
+
+// Convertir el precio a string
+import React from "react";
+import ReactDOM from "react-dom/client";
 import App from "./app";
-import ReactDOM from "react-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import "./global.css";
 
-const queryClient = new QueryClient();
-
-ReactDOM.render(
-  <QueryClientProvider client={queryClient}>
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
     <App />
-    <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

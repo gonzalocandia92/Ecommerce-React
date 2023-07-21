@@ -15,6 +15,7 @@ import Dashboard from './screens/Dashboard';
 import CreateCategory from './screens/CreateCategory';
 import CreateProduct from './screens/CreateProduct';
 import CategoryAdmin from './screens/CategoryAdmin';
+import ProductAdmin from './screens/ProductAdmin';
 
 const queryClient = new QueryClient();
 
@@ -50,9 +51,9 @@ function App() {
               <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}/> </></AdminRoute>}>
           </Route>
 
-          <Route path="/products/edit"  element={ 
+          <Route path="/product/edit"  element={ 
               <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}>
-                <Products />
+                <ProductAdmin />
               </Dashboard></></AdminRoute>}>
           </Route>
 
