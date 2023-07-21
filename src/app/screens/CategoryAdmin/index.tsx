@@ -34,7 +34,7 @@ const CategoryAdmin: React.FC = () => {
     });
 
     const { deleteCategoryMutation } = useDeleteCategory({
-        setError: console.error, // Puedes manejar los errores según tus necesidades
+        setError: console.error,
       });
     
       const queryClient = useQueryClient();
@@ -50,7 +50,6 @@ const CategoryAdmin: React.FC = () => {
     const handleDeleteCategory = async (categoryId: number) => {
         try {
           await deleteCategoryMutation.mutateAsync(categoryId);
-          // Si la eliminación fue exitosa, actualiza la lista de categorías.
           queryClient.invalidateQueries("categories");
         } catch (error) {
           console.error("Error deleting category:", error);
@@ -65,7 +64,7 @@ const CategoryAdmin: React.FC = () => {
         if (editingCategory && newCategoryName.trim() !== "" && newCategoryImage.trim() !== "") {
           const { id } = editingCategory;
           await updateCategoryMutation.mutateAsync({ id, name: newCategoryName, image: newCategoryImage });
-          handleSuccess(); // Llamamos a handleSuccess después de guardar para refrescar las categorías
+          handleSuccess();
         }
       };
   

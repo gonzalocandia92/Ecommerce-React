@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 import Nav from "../../components/Nav";
-import { Link, Outlet } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 interface DashboardProps {
     loggedIn: boolean;
@@ -31,7 +31,7 @@ interface DashboardProps {
                     <Link to="/categories/create"><span>Agregar categoría</span></Link>
                 </ul>
                 <ul className={styles.menu}>
-                    <Link to="/categories/edit"><span>Editar categoría</span></Link>
+                    <Link to="/categories/edit"><span>Listar categorías</span></Link>
                 </ul>
             </div>
             <div className={styles.mainContent}>

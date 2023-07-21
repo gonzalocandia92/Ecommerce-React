@@ -1,30 +1,25 @@
-/* modalStyles.css */
 
-/* Estilo para el fondo oscurecido detrás del modal */
 .customOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  /* Estilo para el contenido del modal */
   .customModal {
-    background-color: #fff; /* Modal de color blanco */
+    background-color: #fff;
     border-radius: 4px;
     padding: 20px;
     max-width: 400px;
     width: 100%;
     color: #121212;
   }
-  
-   
-  /* Estilo para el input dentro del formulario */
+
   .customInput {
     width: 100%;
     padding: 8px;
@@ -33,7 +28,6 @@
     border-radius: 4px;
   }
   
-  /* Estilo para los botones dentro del formulario */
   .customButton {
     padding: 8px 12px;
     margin-right: 10px;
@@ -44,7 +38,6 @@
     color: #fff;
   }
   
-  /* Estilo para los botones dentro del formulario cuando están deshabilitados */
   .customButton[disabled] {
     background-color: #ccc;
     cursor: not-allowed;

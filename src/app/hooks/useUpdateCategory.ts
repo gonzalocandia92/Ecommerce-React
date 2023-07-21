@@ -9,7 +9,7 @@ export const queryClient = new QueryClient();
 
 function useUpdateCategory({ setError, setSuccess }: UseUpdateCategoryProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const queryClient = useQueryClient(); // Obtener la instancia del QueryClient
+  const queryClient = useQueryClient();
 
   const updateCategoryMutation = useMutation(
     async (data: { id: number; name?: string; image?: string }) => {
