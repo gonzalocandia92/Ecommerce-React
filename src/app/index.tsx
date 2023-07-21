@@ -14,6 +14,7 @@ import { AdminRoute } from './components/AdminRoute';
 import Dashboard from './screens/Dashboard';
 import CreateCategory from './screens/CreateCategory';
 import CreateProduct from './screens/CreateProduct';
+import CategoryAdmin from './screens/CategoryAdmin';
 
 const queryClient = new QueryClient();
 
@@ -63,7 +64,7 @@ function App() {
 
           <Route path="/categories/edit"  element={ 
               <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}>
-                <Categories />
+                <CategoryAdmin/>
               </Dashboard></></AdminRoute>}>
           </Route>
 
