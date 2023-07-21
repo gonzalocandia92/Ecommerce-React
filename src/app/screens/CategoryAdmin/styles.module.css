@@ -2,4 +2,19 @@
     margin: 20px;
   }
 
+.deleteButton{
+    background-color: rgb(226, 42, 42);
+  }
+
+.deleteButton:hover{
+    background-color: rgb(253, 0, 0);
+  }
+
+
+.withButton {
+    padding: 2px;;
+    margin-block-start: 1rem;
+}
+
+
   

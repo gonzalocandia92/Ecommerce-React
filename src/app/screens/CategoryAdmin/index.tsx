@@ -7,8 +7,10 @@ import ErrorMessage from "../../components/Error";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
 import useCategories from "../../hooks/useCategories";
-import useUpdateCategory, { queryClient } from "../../hooks/useUpdateCategory";
-import useForceUpdate from "../../hooks/useForceUpdate";
+import useUpdateCategory from "../../hooks/useUpdateCategory";
+import { useQueryClient } from "react-query";
+import useDeleteCategory from "../../hooks/useDeleteCategory";
+
 
 import "./modalStyles.css";
 
@@ -30,8 +32,12 @@ const CategoryAdmin: React.FC = () => {
         setError: console.error,
         setSuccess: () => setIsModalOpen(false),
     });
+
+    const { deleteCategoryMutation } = useDeleteCategory({
+        setError: console.error, // Puedes manejar los errores según tus necesidades
+      });
     
-    const forceUpdate = useForceUpdate();
+      const queryClient = useQueryClient();
 
     
     const handleEditCategory = (category: Category) => {
@@ -40,6 +46,16 @@ const CategoryAdmin: React.FC = () => {
       setNewCategoryImage(category.image);
       setIsModalOpen(true);
     };
+
+    const handleDeleteCategory = async (categoryId: number) => {
+        try {
+          await deleteCategoryMutation.mutateAsync(categoryId);
+          // Si la eliminación fue exitosa, actualiza la lista de categorías.
+          queryClient.invalidateQueries("categories");
+        } catch (error) {
+          console.error("Error deleting category:", error);
+        }
+      };
   
     const handleModalClose = () => {
       setIsModalOpen(false);
@@ -66,11 +82,12 @@ const CategoryAdmin: React.FC = () => {
       <h2>Categories</h2>
       <CardList>
         {data?.map((category) => (
-          <div key={category.id}>
+          <div className={styles.withButton} key={category.id}>
             <Link to={`/category/${category.id}/products`}>
               <CardChildren image={category.image} title={category.name} />
             </Link>
             <button onClick={() => handleEditCategory(category)}>Editar</button>
+            <button className={styles.deleteButton} onClick={() => handleDeleteCategory(category.id)}>Eliminar</button>
           </div>
         ))}
       </CardList>
