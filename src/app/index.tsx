@@ -10,6 +10,12 @@ import Home from './screens/Home';
 import LoginUser from './screens/LoginUser';
 import RegisterUser from './screens/RegisterUser';
 import { PrivateRoute } from './components/PrivateRoute';
+import { AdminRoute } from './components/AdminRoute';
+import Dashboard from './screens/Dashboard';
+import CreateCategory from './screens/CreateCategory';
+import CreateProduct from './screens/CreateProduct';
+import CategoryAdmin from './screens/CategoryAdmin';
+import ProductAdmin from './screens/ProductAdmin';
 
 const queryClient = new QueryClient();
 
@@ -26,31 +32,49 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={<Layout loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn} />}
-          >
+          <Route path="/" element={<Layout loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn} />}>
             <Route path="/" element={<Home />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:categoryId/products" element={<ProductsByCategory />} />
             <Route path="/products" element={<Products />} />
-            <Route
-              path="/login"
-              element={
+            <Route path="/login" element={
                 <PrivateRoute>
                   <LoginUser setLoggedIn={handleSetLoggedIn} />
-                </PrivateRoute>
-              }
-            />
-       <Route
-              path="/register"
-              element={
+                </PrivateRoute> }/>
+            <Route path="/register" element={
                 <PrivateRoute>
                   <RegisterUser setLoggedIn={handleSetLoggedIn} />
-                </PrivateRoute>
-              }
-            />
+                </PrivateRoute> }/>
           </Route>
+
+          <Route path="/dashboard"  element={ 
+              <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}/> </></AdminRoute>}>
+          </Route>
+
+          <Route path="/product/edit"  element={ 
+              <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}>
+                <ProductAdmin />
+              </Dashboard></></AdminRoute>}>
+          </Route>
+
+          <Route path="/products/create"  element={ 
+              <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}>
+                <CreateProduct />
+              </Dashboard></></AdminRoute>}>
+          </Route>
+
+          <Route path="/categories/edit"  element={ 
+              <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}>
+                <CategoryAdmin/>
+              </Dashboard></></AdminRoute>}>
+          </Route>
+
+          <Route path="/categories/create"  element={ 
+              <AdminRoute> <><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}>
+                <CreateCategory/>
+              </Dashboard></></AdminRoute>}>
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

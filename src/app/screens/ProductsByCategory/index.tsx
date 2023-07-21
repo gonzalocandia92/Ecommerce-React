@@ -1,72 +1,40 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
+import useProducts from "../../hooks/useProducts";
 
 interface RouteParams {
   categoryId: string;
   [key: string]: string | undefined;
 }
 
-interface Category {
-  id: number;
-  name: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  images: string[];
-  createdAt: string;
-  updatedAt: string;
-  category: Category;
-}
-
-const fetchProductsByCategory = async (categoryId: string) => {
-  const response = await fetch(`https://api.escuelajs.co/api/v1/categories/${categoryId}/products`);
-  if (!response.ok) {
-    const errorMessage = "Failed to fetch categories";
-    throw { message: errorMessage };
-  }
-  const data = await response.json();
-  return data as Product[];
-};
-
 const ProductsByCategory: React.FC = () => {
   const { categoryId } = useParams<RouteParams>();
-  const { data, isLoading, error } = useQuery<Product[]>(["products", categoryId], () =>
-    fetchProductsByCategory(categoryId || '')
-  );
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 6;
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <ErrorMessage message={(error as Error).message} />;
-  }
+  const { productsData, isLoadingProducts, productsError, } = useProducts(categoryId || '');
 
   // Calculating pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 6;
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = data?.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = productsData?.slice(indexOfFirstProduct, indexOfLastProduct);
 
   // Handle page change
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
+  if (isLoadingProducts) {
+    return <Loader />;
+  }
+
+  if (productsError) {
+    return <ErrorMessage message={(productsError as Error).message} />;
+  }
 
   return (
     <div className={styles.categoryList}>
@@ -98,7 +66,7 @@ const ProductsByCategory: React.FC = () => {
             <span className={styles.paginationPage}>Page: {currentPage}</span>
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              disabled={indexOfLastProduct >= (data?.length || 0)}
+              disabled={indexOfLastProduct >= (productsData?.length || 0)}
               className={styles.paginationButton}
             >
               {">"}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Error";
@@ -8,14 +8,19 @@ interface LoginUserProps {
   setLoggedIn: (loggedIn: boolean) => void;
 }
 
+interface UserData {
+  id: number;
+  email: string;
+  name: string;
+  role: string;
+}
+
 const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -45,19 +50,42 @@ const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
       }
 
       const data = await response.json();
-      localStorage.setItem("accessToken", data.access_token);
-      setLoggedIn(true); // Actualiza el estado loggedIn a true
+      const { access_token } = data;
 
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
-        // Si el usuario ya está logueado, redirige al usuario a la página principal
-        navigate("/");
-      }
+      // Guardar el token de acceso en el localStorage
+      localStorage.setItem("accessToken", access_token);
+
+      // Obtener los datos del usuario logueado
+      const userData = await fetchUserData(access_token);
+
+      // Guardar los datos del usuario en el localStorage
+      localStorage.setItem("userData", JSON.stringify(userData));
+
+      // Actualizar el estado loggedIn a true
+      setLoggedIn(true);
+
+      // Redirigir al usuario a la página principal
+      navigate("/");
     } catch (error) {
       setError(error.message || "Login failed");
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchUserData = async (accessToken: string): Promise<UserData> => {
+    const response = await fetch("https://api.escuelajs.co/api/v1/auth/profile", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user data");
+    }
+
+    const userData = await response.json();
+    return userData;
   };
 
   return (
