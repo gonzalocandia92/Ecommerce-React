@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import styles from "./styles.module.css";
 import Loader from "../../components/Loader";
@@ -65,6 +65,10 @@ const ProductAdmin: React.FC = () => {
   };
 
   const [imageURLs, setImageURLs] = useState<string[]>(newProductImages);
+
+  useEffect(() => {
+    setImageURLs(newProductImages);
+  }, [newProductImages]);
 
   const handleAddImageURL = () => {
     setImageURLs([...imageURLs, ""]);
