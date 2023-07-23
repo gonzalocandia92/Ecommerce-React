@@ -41,7 +41,7 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
         <ul>
           <li>
           { userData?.role ==='admin' ? ( 
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/dashboard"><button>Dashboard</button></Link>
             ) : (
               <Link to="/">Home</Link> )
           }

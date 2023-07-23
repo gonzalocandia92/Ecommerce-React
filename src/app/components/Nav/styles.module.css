@@ -73,12 +73,15 @@ a:hover {
 }
 
 .username {
-  color: aquamarine;
+  color: rgb(0, 255, 183);
 }
 
 .dropdown {
   position: relative;
   color: antiquewhite;
+  background-color: rgba(0, 0, 0, 0.275);
+  padding: 0.6rem;
+  border-radius: 10px;
 
 }
 
