@@ -5,6 +5,7 @@ import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
 import useCategories from "../../hooks/useCategories";
 import useProducts from "../../hooks/useProducts";
+import { Link } from "react-router-dom"; 
 
 const ProductListView: React.FC = () => {
   
@@ -76,12 +77,14 @@ const ProductListView: React.FC = () => {
         <CardList>
           {filteredProducts.map((product) => (
             <div key={product.id} className={styles.productCard}>
-              <CardChildren
-                image={product.images[0]}
-                title={product.title}
-                price={product.price}
-                description={product.description}
-              />
+              <Link to={`/product/${product.id}`} className={styles.productLink}>
+                <CardChildren
+                  image={product.images[0]}
+                  title={product.title}
+                  price={product.price}
+                  description={product.description}
+                />
+              </Link>
             </div>
           ))}
         </CardList>

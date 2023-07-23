@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import LogoutModal from "../LogoutModal";
+import Cart from "../Cart";
 
 interface NavProps {
   loggedIn: boolean;
@@ -52,6 +53,9 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
           <li>
             <Link to="/products">Products</Link>
           </li>
+          <li>
+            <Cart />
+          </li>
 
           <li className={styles.dropdown}>
           { userData ? ( 
@@ -82,6 +86,7 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
             </ul>
           </li>
         </ul>
+
       </div>
       {showLogoutModal && (
         <LogoutModal
