@@ -43,7 +43,7 @@ const ProductAdmin: React.FC = () => {
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductImages, setNewProductImages] = useState<string[]>([]);
 
-  const { updateProductMutation, isLoading: isUpdating, handleSuccess } =
+  const { updateProductMutation, isLoading: isUpdating } =
     useUpdateProduct({
       setError: console.error,
       setSuccess: () => setIsModalOpen(false),
@@ -102,7 +102,7 @@ const ProductAdmin: React.FC = () => {
       });
       queryClient.invalidateQueries("products");
 
-      handleSuccess();
+      setIsModalOpen(false);
     }
   };
 
@@ -120,7 +120,7 @@ const ProductAdmin: React.FC = () => {
   }
 
   if (error) {
-    return <ErrorMessage message={error.message} />;
+    return <ErrorMessage message={(error as Error).message} />;
   }
 
   return (

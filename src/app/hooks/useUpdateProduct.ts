@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 
 interface UseUpdateProductProps {
   setError: React.Dispatch<React.SetStateAction<string>>;
