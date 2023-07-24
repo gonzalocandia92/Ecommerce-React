@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
 import useProductByID from "../../hooks/useProductByID";
 import { useCartContext } from "../../hooks/CartContext";
+import ProductsByCategory from "../ProductsByCategory";
 
 
 const DetailProduct: React.FC = () => {
@@ -20,6 +21,13 @@ const DetailProduct: React.FC = () => {
   };
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+  useEffect(() => {
+    if (!isLoading && !error && product) {
+      setSelectedImage(product.images[0]);
+    }
+  }, [isLoading, error, product]);
+  
 
   if (isLoading) {
     return <Loader />;
@@ -33,6 +41,7 @@ const DetailProduct: React.FC = () => {
     return <ErrorMessage message="Product not found" />;
   }
 
+  
   const handleThumbnailClick = (imageUrl: string) => {
     setSelectedImage(imageUrl);
   };
@@ -40,6 +49,7 @@ const DetailProduct: React.FC = () => {
   
 
   return (
+    <>
     <div className={styles.container}>
       <div className={styles.imageColumn}>
         <div className={styles.imageWrapper}>
@@ -77,6 +87,10 @@ const DetailProduct: React.FC = () => {
         </div>
       </div>
     </div>
+    <div className={styles.categoryProducts}>
+    <ProductsByCategory filterByCategoryP="true" categoryIdP={product.category.id.toString()}/> 
+    </div>
+    </>
   );
 };
 

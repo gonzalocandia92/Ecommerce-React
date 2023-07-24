@@ -28,7 +28,7 @@ const fetchProducts = async (query: string) => {
   return data as Product[];
 };
 
-const useProducts = (filterByCategory: string | undefined, categoryId?: string, ) => {
+const useProducts = (filterByCategory: boolean | undefined, categoryId?: string, ) => {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [priceMin, setPriceMin] = useState("");
@@ -57,7 +57,7 @@ const useProducts = (filterByCategory: string | undefined, categoryId?: string, 
   
     const [filteredProductsQuery, setFilteredProductsQuery] = useState("");
   
-    const { data: productsData, isLoading: isLoadingProducts, error: productsError } = useQuery<Product[]>(
+    const { data: productsData, isLoading: isLoadingProducts, error: productsError } = useQuery<Product[], Error>(
       ["products", filteredProductsQuery],
       () => fetchProducts(filteredProductsQuery)
     );
