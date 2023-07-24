@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import styles from "./styles.module.css";
 import Loader from "../../components/Loader";
@@ -43,7 +43,7 @@ const ProductAdmin: React.FC = () => {
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductImages, setNewProductImages] = useState<string[]>([]);
 
-  const { updateProductMutation, isLoading: isUpdating, handleSuccess } =
+  const { updateProductMutation, isLoading: isUpdating } =
     useUpdateProduct({
       setError: console.error,
       setSuccess: () => setIsModalOpen(false),
@@ -65,6 +65,10 @@ const ProductAdmin: React.FC = () => {
   };
 
   const [imageURLs, setImageURLs] = useState<string[]>(newProductImages);
+
+  useEffect(() => {
+    setImageURLs(newProductImages);
+  }, [newProductImages]);
 
   const handleAddImageURL = () => {
     setImageURLs([...imageURLs, ""]);
@@ -98,7 +102,7 @@ const ProductAdmin: React.FC = () => {
       });
       queryClient.invalidateQueries("products");
 
-      handleSuccess();
+      setIsModalOpen(false);
     }
   };
 
@@ -116,7 +120,7 @@ const ProductAdmin: React.FC = () => {
   }
 
   if (error) {
-    return <ErrorMessage message={error.message} />;
+    return <ErrorMessage message={(error as Error).message} />;
   }
 
   return (

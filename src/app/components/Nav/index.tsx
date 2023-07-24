@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import LogoutModal from "../LogoutModal";
+import Cart from "../Cart";
 
 interface NavProps {
   loggedIn: boolean;
@@ -41,7 +42,7 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
         <ul>
           <li>
           { userData?.role ==='admin' ? ( 
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/dashboard"><button>Dashboard</button></Link>
             ) : (
               <Link to="/">Home</Link> )
           }
@@ -51,6 +52,9 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
           </li>
           <li>
             <Link to="/products">Products</Link>
+          </li>
+          <li>
+            <Cart />
           </li>
 
           <li className={styles.dropdown}>
@@ -82,6 +86,7 @@ const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
             </ul>
           </li>
         </ul>
+
       </div>
       {showLogoutModal && (
         <LogoutModal
