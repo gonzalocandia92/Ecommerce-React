@@ -28,7 +28,8 @@ const DetailCart: React.FC = () => {
             <div className={styles.cardsContainer}>
               {cartItems.map((item) => (
                 <div key={item.id} className={styles.card}>
-                  <h3>{item.title}</h3> 
+                  <h3>{item.title}</h3>
+
                   <div className={styles.cardContent}>
                     <p>Quantity: {item.quantity}</p>
                     <p>Price: {item.price}</p>
