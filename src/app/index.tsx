@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Products from './screens/Products';
@@ -19,6 +18,7 @@ import ProductAdmin from './screens/ProductAdmin';
 import CartProvider from './hooks/CartContext';
 import DetailProduct from './screens/DetailProduct.tsx';
 import DetailCart from './screens/DetailCart/index.tsx';
+import { useState } from 'react';
 
 const queryClient = new QueryClient();
 

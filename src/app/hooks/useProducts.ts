@@ -1,22 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
+import Product from "../interfaces/Product";
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  images: string[];
-  createdAt: string;
-  updatedAt: string;
-  category: {
-    id: number;
-    name: string;
-    image: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
 
 const fetchProducts = async (query: string) => {
   const response = await fetch(`https://api.escuelajs.co/api/v1/products${query}`);
