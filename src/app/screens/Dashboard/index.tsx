@@ -22,16 +22,16 @@ interface DashboardProps {
                     </div>
                 </Link>
                 <ul className={styles.menu}>
-                    <Link to="/products/create"> <span>Agregar producto</span></Link>
+                    <Link to="/products/create"> <i className="fa fa-plus-circle" fa-prod aria-hidden="true"></i><span> Add product</span></Link>
                 </ul>
                 <ul className={styles.menu}>
-                    <Link to="/product/edit"> <span>Editar producto</span></Link>
+                    <Link to="/product/edit"> <i className="fa fa-list" fa-prod aria-hidden="true"></i><span> List products</span></Link>
                 </ul>
                 <ul className={styles.menu}>
-                    <Link to="/categories/create"><span>Agregar categoría</span></Link>
+                    <Link to="/categories/create"><i className="fa fa-plus-circle" fa-prod aria-hidden="true"></i><span> Add category</span></Link>
                 </ul>
                 <ul className={styles.menu}>
-                    <Link to="/categories/edit"><span>Listar categorías</span></Link>
+                    <Link to="/categories/edit"><i className="fa fa-list" fa-prod aria-hidden="true"></i><span> List categories</span></Link>
                 </ul>
             </div>
             <div className={styles.mainContent}>
