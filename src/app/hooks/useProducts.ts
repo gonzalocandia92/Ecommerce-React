@@ -62,7 +62,6 @@ const useProducts = (filterByCategory: boolean | undefined, categoryId?: string,
       () => fetchProducts(filteredProductsQuery)
     );
   
-    // Aplicar el filtro por categoría solo si filterByCategory es true y se proporciona un categoryId
     const filteredProducts = filterByCategory && categoryId ? productsData?.filter(product => product.category.id === parseInt(categoryId)) : productsData;
   
     return {

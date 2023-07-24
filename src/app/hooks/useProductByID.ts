@@ -43,9 +43,7 @@ const useProductByID = (productId: number) => {
 
     fetchProduct();
 
-    // Cleanup the effect to avoid potential memory leaks
     return () => {
-      // Add any cleanup logic here if needed
     };
   }, [productId]);
 
