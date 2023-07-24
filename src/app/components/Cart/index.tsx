@@ -2,6 +2,7 @@ import React from 'react';
 import { useCartContext } from '../../hooks/CartContext';
 import styles from './styles.module.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { Link } from 'react-router-dom';
 
 const Cart: React.FC = () => {
   const { cartItems } = useCartContext();
@@ -11,16 +12,18 @@ const Cart: React.FC = () => {
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className={styles.cart}>
-      <div className={styles.cartIcon}>
-        <span className={styles.cartItemsCount}>{totalItems}</span>
-        <i className="fas fa-shopping-cart"></i>
+    <Link to ="cart/detail"> 
+      <div className={styles.cart}>
+        <div className={styles.cartIcon}>
+          <span className={styles.cartItemsCount}>{totalItems}</span>
+          <i className="fas fa-shopping-cart"></i>
+        </div>
+        <div className={styles.cartTotal}>
+          $ {totalAmount}
+        </div>
       </div>
-      <div className={styles.cartTotal}>
-        $ {totalAmount}
-      </div>
+    </Link>
 
-    </div>
   );
 };
 

@@ -19,7 +19,7 @@ const Categories = () => {
 
   return (
     <div className={styles.categoryList}>
-      <h2>Categories</h2>
+      <h2>Explore our Categories!</h2>
       <CardList>
         {data?.map((category) => (
           <div key={category.id}>

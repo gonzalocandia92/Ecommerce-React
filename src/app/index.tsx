@@ -18,6 +18,7 @@ import CategoryAdmin from './screens/CategoryAdmin';
 import ProductAdmin from './screens/ProductAdmin';
 import CartProvider from './hooks/CartContext';
 import DetailProduct from './screens/DetailProduct.tsx';
+import DetailCart from './screens/DetailCart/index.tsx';
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ function App() {
               <Route path="/product/:productId" element={<DetailProduct />} />
               <Route path="/login" element={<PrivateRoute><LoginUser setLoggedIn={handleSetLoggedIn} /></PrivateRoute>} />
               <Route path="/register" element={<PrivateRoute><RegisterUser setLoggedIn={handleSetLoggedIn} /></PrivateRoute>} />
+              <Route path="/cart/detail" element={<DetailCart />} />
             </Route>
  
             <Route path="/dashboard" element={<AdminRoute><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn} /></AdminRoute>} />
