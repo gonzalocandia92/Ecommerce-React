@@ -23,17 +23,15 @@ const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
     setPassword(e.target.value);
   };
 
-  const { loginMutation } = useLoginMutation();
+  const loginMutation = useLoginMutation(); // Use the useLoginMutation hook here
 
   const handleLogin = async () => {
     try {
       const credentials = { email, password };
-      const userData = await loginMutation.mutateAsync(credentials);
+      const userData = await loginMutation.mutateAsync(credentials); // Get the user data from the loginMutation
 
       setLoggedIn(true);
-      localStorage.setItem("userData", JSON.stringify(userData));
       navigate("/");
-
     } catch (error) {
       setError(error.message || "Login failed");
     }

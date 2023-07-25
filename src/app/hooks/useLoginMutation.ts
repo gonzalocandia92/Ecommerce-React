@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import UserData from "../interfaces/UserData";
 
 interface Credentials {
@@ -7,9 +6,23 @@ interface Credentials {
   password: string;
 }
 
+const fetchUserData = async (accessToken: string): Promise<UserData> => {
+  const response = await fetch("https://api.escuelajs.co/api/v1/auth/profile", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch user data");
+  }
+
+  const userData = await response.json();
+  return userData;
+};
+
 const useLoginMutation = () => {
   const queryClient = useQueryClient();
-  const [error, setError] = useState<string | null>(null);
 
   const loginMutation = useMutation<UserData, Error, Credentials>(
     async (credentials) => {
@@ -28,59 +41,29 @@ const useLoginMutation = () => {
       const data = await response.json();
       const { access_token } = data;
 
+      // Guardar el token de acceso en el localStorage
       localStorage.setItem("accessToken", access_token);
 
-      return data;
-    },
-    {
-      onError: (error) => {
-        setError("Error fetching user data");
-        console.error("Error fetching user data:", error);
-      },
-      onSettled: (data, error) => {
-        if (!error) {
-          queryClient.invalidateQueries(["userData", data]);
-        }
-      },
-    }
-  );
+      const userData = await fetchUserData(access_token);
 
-  const accessToken = localStorage.getItem("accessToken") || "";
+      // Guardar los datos del usuario en el localStorage
+      localStorage.setItem("userData", JSON.stringify(userData));
 
-  const userDataQuery = useQuery<UserData, Error>(
-    ["userData", accessToken],
-    async () => {
-      const response = await fetch("https://api.escuelajs.co/api/v1/auth/profile", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-
-      const userData = await response.json();
       return userData;
     },
     {
-      initialData: () => {
-        const storedUserData = localStorage.getItem("userData");
-        if (storedUserData) {
-          return JSON.parse(storedUserData);
-        }
-        return undefined;
-      },
-      onSuccess: (userData) => {
-        localStorage.setItem("userData", JSON.stringify(userData));
-      },
       onError: (error) => {
-        setError(error.message);
+        throw error;
+      },
+      onSettled: (data, error) => {
+        if (!error) {
+          queryClient.invalidateQueries(["userData", data]); // Invalidate the userData query after login
+        }
       },
     }
   );
 
-  return { loginMutation, userDataQuery, error };
+  return loginMutation;
 };
 
 export default useLoginMutation;
