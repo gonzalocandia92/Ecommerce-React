@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+  }
+  
+ .successMessage {
+    font-size: 24px;
+    color: rgb(0, 217, 0);
+    margin-bottom: 10px;
+  }
+  
+.thanks {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+
+  
+  @media (max-width: 768px) {
+    .successMessage {
+      font-size: 20px;
+    }
+    .thanks {
+      font-size: 16px;
+    }
+    .backButton {
+      font-size: 14px;
+    }
+  }
+  

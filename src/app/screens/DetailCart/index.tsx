@@ -2,9 +2,17 @@ import React from "react";
 import { useCartContext } from "../../hooks/CartContext";
 import styles from "./styles.module.css";
 import Categories from "../Categories";
+import { useNavigate } from "react-router-dom";
 
 const DetailCart: React.FC = () => {
-  const { cartItems, decreaseQuantity, addToCart, removeFromCart } = useCartContext();
+  const { cartItems, decreaseQuantity, addToCart, removeFromCart, clearCart } = useCartContext();
+  const navigate = useNavigate();
+
+  const handleFinishPurchase = () => {
+    const totalPrice = getTotalPrice();
+    navigate("/success", { state: { totalPrice } });
+    clearCart(); 
+  };
 
   const getTotalPrice = () => {
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -46,7 +54,7 @@ const DetailCart: React.FC = () => {
               ))}
             </div>
             <div className={styles.total}>
-              <p>Total Price: $ {getTotalPrice()}</p>
+              <button onClick={handleFinishPurchase}>Finalizar compra</button>
             </div>
           </>
         )}

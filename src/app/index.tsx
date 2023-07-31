@@ -19,6 +19,7 @@ import CartProvider from './hooks/CartContext';
 import DetailProduct from './screens/DetailProduct.tsx';
 import DetailCart from './screens/DetailCart/index.tsx';
 import { useState } from 'react';
+import SuccessCart from './screens/SuccessCart/index.tsx';
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,6 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <CartProvider>
-          
           <Routes>
             <Route path="/" element={<Layout loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn} />}>
               <Route path="/" element={<Home />} />
@@ -45,8 +45,8 @@ function App() {
               <Route path="/login" element={<PrivateRoute><LoginUser setLoggedIn={handleSetLoggedIn} /></PrivateRoute>} />
               <Route path="/register" element={<PrivateRoute><RegisterUser setLoggedIn={handleSetLoggedIn} /></PrivateRoute>} />
               <Route path="/cart/detail" element={<DetailCart />} />
+              <Route path="/success/" element={<SuccessCart />} />
             </Route>
- 
             <Route path="/dashboard" element={<AdminRoute><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn} /></AdminRoute>} />
             <Route path="/product/edit" element={<AdminRoute><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}><ProductAdmin /></Dashboard></AdminRoute>} />
             <Route path="/products/create" element={<AdminRoute><Dashboard loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn}><CreateProduct /></Dashboard></AdminRoute>} />
