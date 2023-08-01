@@ -36,8 +36,8 @@ function useUpdateProduct({ setError, setSuccess }: UseUpdateProductProps) {
 
         setSuccess("Product updated successfully");
         return await res.json();
-      } catch (error) {
-        setError(error.message);
+      } catch (error: unknown) { 
+        setError((error as Error).message); 
         throw error;
       } finally {
         setIsLoading(false);

@@ -6,11 +6,19 @@ interface UseCreateCategoryProps {
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function useCreateCategory({ setError, setSuccess }: UseCreateCategoryProps) {
+interface CategoryData {
+  name: string;
+  image: string;
+}
+
+function useCreateCategory({
+  setError,
+  setSuccess,
+}: UseCreateCategoryProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const createCategoryMutation = useMutation(
-    async (data: { name: string; image: string }) => {
+  const createCategoryMutation = useMutation<CategoryData, unknown, CategoryData>(
+    async (data) => {
       setIsLoading(true);
       try {
         const res = await fetch("https://api.escuelajs.co/api/v1/categories/", {
@@ -28,8 +36,8 @@ function useCreateCategory({ setError, setSuccess }: UseCreateCategoryProps) {
 
         setSuccess("Category created successfully");
         return await res.json();
-      } catch (error) {
-        setError(error.message);
+      } catch (error: unknown) { 
+        setError((error as Error).message); 
         throw error;
       } finally {
         setIsLoading(false);
