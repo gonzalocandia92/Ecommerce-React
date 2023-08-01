@@ -1,36 +1,41 @@
+import { useState } from "react";
 import { useMutation } from "react-query";
 
-function useCreateProduct(
-  setError: (error: string) => void,
-  setSuccess: (message: string) => void
-) {
+function useCreateProduct() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const createProductMutation = useMutation(
-    (data) => {
-      return fetch("https://api.escuelajs.co/api/v1/products/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }).then((res) => {
+    async (data: {
+      title: string;
+      price: number;
+      description: string;
+      categoryId: number;
+      images: string[];
+    }) => {
+      setIsLoading(true);
+      try {
+        const res = await fetch("https://api.escuelajs.co/api/v1/products/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
         if (!res.ok) {
-          setError("Failed to create product");
           throw new Error("Failed to create product");
         }
-        return res.json();
-      });
-    },
-    {
-      onSuccess: () => {
-        setSuccess("Product created successfully");
-      },
-      onError: () => {
-        setError("Failed to create product");
-      },
+
+        return await res.json();
+      } catch (error: unknown) {
+        throw (error as Error).message;
+      } finally {
+        setIsLoading(false);
+      }
     }
   );
 
-  return createProductMutation;
+  return { createProductMutation, isLoading };
 }
 
 export default useCreateProduct;
