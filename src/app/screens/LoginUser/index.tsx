@@ -28,12 +28,12 @@ const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
   const handleLogin = async () => {
     try {
       const credentials = { email, password };
-      const userData = await loginMutation.mutateAsync(credentials); // Get the user data from the loginMutation
+      await loginMutation.mutateAsync(credentials); // Get the user data from the loginMutation
 
       setLoggedIn(true);
       navigate("/");
-    } catch (error) {
-      setError(error.message || "Login failed");
+    } catch (error: unknown)  {
+      setError((error as Error).message || 'login failed');
     }
   };
 
