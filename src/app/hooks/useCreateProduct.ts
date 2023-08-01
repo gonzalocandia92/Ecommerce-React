@@ -19,7 +19,7 @@ function useCreateProduct(setError: React.Dispatch<React.SetStateAction<string>>
     unknown, // Tipo de retorno en caso de error
     ProductData, // Tipo de los parámetros de la función de mutación
     unknown // Tipo de los parámetros extra
-  >( // Definimos explícitamente los tipos aquí
+  >(
     async (data: ProductData) => {
       try {
         const res = await fetch("https://api.escuelajs.co/api/v1/products/", {
@@ -32,7 +32,7 @@ function useCreateProduct(setError: React.Dispatch<React.SetStateAction<string>>
 
         if (!res.ok) {
           setError("Failed to create product");
-          throw new Error("Failed to create product");
+          return; // Return early if there's an error, without throwing an exception
         }
 
         return await res.json();
@@ -47,7 +47,6 @@ function useCreateProduct(setError: React.Dispatch<React.SetStateAction<string>>
     ...createProductMutation,
     mutate: createProductMutation.mutate,
     mutateAsync: createProductMutation.mutateAsync,
-  } as CustomMutationResult; // Hacemos una conversión de tipo explícita
+  } as CustomMutationResult;
 }
-
 export default useCreateProduct;
