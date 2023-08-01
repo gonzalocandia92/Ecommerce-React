@@ -13,7 +13,7 @@ const CreateProduct: React.FC = () => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const createProductMutation = useCreateProduct(setError, setSuccess);
+  const createProductMutation = useCreateProduct(setError);
 
   const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useCategories();
 
