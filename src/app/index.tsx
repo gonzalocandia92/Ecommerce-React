@@ -8,7 +8,7 @@ import Categories from './screens/Categories';
 import Home from './screens/Home';
 import LoginUser from './screens/LoginUser';
 import RegisterUser from './screens/RegisterUser';
-import { PrivateRoute } from './components/PrivateRoute';
+import PrivateRoute  from './components/PrivateRoute';
 import { AdminRoute } from './components/AdminRoute';
 import Dashboard from './screens/Dashboard';
 import CreateCategory from './screens/CreateCategory';
