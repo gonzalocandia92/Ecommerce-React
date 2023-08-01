@@ -18,16 +18,18 @@ const ProductListView: React.FC = () => {
     priceMax, handlePriceMaxChange,
     handleFilterClick,
     productsData, isLoadingProducts, productsError,
-  } = useProducts('');
+  } = useProducts(false);
 
   if (isLoadingCategories || isLoadingProducts) {
     return <Loader />;
   }
 
   if (categoriesError || productsError) {
-    return <ErrorMessage message={(categoriesError || productsError).message} />;
+    const errorMessage = categoriesError?.message || productsError?.message || "An error occurred.";
+    return <ErrorMessage message={errorMessage} />;
   }
 
+  
   const filteredProducts = productsData || [];
 
   return (

@@ -54,8 +54,8 @@ const RegisterUser: React.FC<RegisterUserProps> = ({ setLoggedIn }) => {
       setLoggedIn(true); // Actualiza el estado loggedIn a true
 
       navigate("/"); // Redirige al usuario a la página principal
-    } catch (error) {
-      setError(error.message || "Registration failed");
+    } catch (error: unknown) { 
+      setError((error as Error).message || 'Registration failed'); 
     } finally {
       setLoading(false);
     }
