@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, UseMutationResult } from "react-query";
+import { useMutation, UseMutationResult, UseMutateAsyncFunction, UseMutateFunction } from "react-query";
 
 interface ProductData {
   title: string;
@@ -9,17 +9,20 @@ interface ProductData {
   images: string[];
 }
 
-type CustomMutationResult = UseMutationResult<
-  unknown,
-  unknown,
-  ProductData,
-  unknown
->;
+interface CustomMutationResult extends Omit<UseMutationResult<unknown, unknown, ProductData, unknown>, "mutate"> {
+  mutate: UseMutateFunction<unknown, unknown, ProductData, unknown>;
+  mutateAsync: UseMutateAsyncFunction<unknown, unknown, ProductData, unknown>;
+}
 
 function useCreateProduct(): CustomMutationResult {
   const [isLoading, setIsLoading] = useState(false);
 
-  const createProductMutation = useMutation(
+  const createProductMutation = useMutation<
+    unknown, // Tipo de retorno en caso de éxito
+    unknown, // Tipo de retorno en caso de error
+    ProductData, // Tipo de los parámetros de la función de mutación
+    unknown // Tipo de los parámetros extra
+  >( // Definimos explícitamente los tipos aquí
     async (data: ProductData) => {
       setIsLoading(true);
       console.log(isLoading);
@@ -45,7 +48,11 @@ function useCreateProduct(): CustomMutationResult {
     }
   );
 
-  return createProductMutation;
+  return {
+    ...createProductMutation,
+    mutate: createProductMutation.mutate,
+    mutateAsync: createProductMutation.mutateAsync,
+  } as CustomMutationResult; // Hacemos una conversión de tipo explícita
 }
 
 export default useCreateProduct;
