@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, UseMutationResult, MutationFunction } from "react-query";
+import { useMutation, UseMutationResult } from "react-query";
 
 interface ProductData {
   title: string;
@@ -10,7 +10,7 @@ interface ProductData {
 }
 
 type CustomMutationResult = UseMutationResult<
-  any,
+  unknown,
   unknown,
   ProductData,
   unknown
@@ -22,6 +22,7 @@ function useCreateProduct(): CustomMutationResult {
   const createProductMutation = useMutation(
     async (data: ProductData) => {
       setIsLoading(true);
+      console.log(isLoading);
       try {
         const res = await fetch("https://api.escuelajs.co/api/v1/products/", {
           method: "POST",
