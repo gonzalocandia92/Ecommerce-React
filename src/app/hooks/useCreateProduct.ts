@@ -13,7 +13,7 @@ interface CustomMutationResult extends Omit<UseMutationResult<unknown, unknown, 
   mutateAsync: UseMutateAsyncFunction<unknown, unknown, ProductData, unknown>;
 }
 
-function useCreateProduct(): CustomMutationResult {
+function useCreateProduct(setError: React.Dispatch<React.SetStateAction<string>>): CustomMutationResult {
   const createProductMutation = useMutation<
     unknown, // Tipo de retorno en caso de éxito
     unknown, // Tipo de retorno en caso de error
@@ -31,12 +31,14 @@ function useCreateProduct(): CustomMutationResult {
         });
 
         if (!res.ok) {
+          setError("Failed to create product");
           throw new Error("Failed to create product");
         }
 
         return await res.json();
       } catch (error: unknown) {
-        throw ((error as Error).message);
+        setError((error as Error).message);
+        throw error;
       }
     }
   );
