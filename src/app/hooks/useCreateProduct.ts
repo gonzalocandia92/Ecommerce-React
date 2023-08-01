@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useMutation, UseMutationResult, UseMutateAsyncFunction, UseMutateFunction } from "react-query";
 
 interface ProductData {
@@ -15,8 +14,6 @@ interface CustomMutationResult extends Omit<UseMutationResult<unknown, unknown, 
 }
 
 function useCreateProduct(): CustomMutationResult {
-  const [isLoading, setIsLoading] = useState(false);
-
   const createProductMutation = useMutation<
     unknown, // Tipo de retorno en caso de éxito
     unknown, // Tipo de retorno en caso de error
@@ -24,8 +21,6 @@ function useCreateProduct(): CustomMutationResult {
     unknown // Tipo de los parámetros extra
   >( // Definimos explícitamente los tipos aquí
     async (data: ProductData) => {
-      setIsLoading(true);
-      console.log(isLoading);
       try {
         const res = await fetch("https://api.escuelajs.co/api/v1/products/", {
           method: "POST",
@@ -42,8 +37,6 @@ function useCreateProduct(): CustomMutationResult {
         return await res.json();
       } catch (error: unknown) {
         throw ((error as Error).message);
-      } finally {
-        setIsLoading(false);
       }
     }
   );
