@@ -5,14 +5,16 @@
   }
   
   .sidebar {
-    flex: 0 0 200px;
+    flex: 0 0 auto;
     background-color: #000000;
     padding: 20px;
+    text-align: left;
   }
   
   .menu {
     list-style: none;
     padding: 0;
+
   }
   
   .logo {

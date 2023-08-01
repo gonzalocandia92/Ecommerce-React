@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import LogoutModal from "../LogoutModal";
 import Cart from "../Cart";
+import UserData from "../../interfaces/UserData";
 
 interface NavProps {
   loggedIn: boolean;
   setLoggedIn: (loggedIn: boolean) => void;
 }
-interface UserData {
-  id: number;
-  email: string;
-  name: string;
-  role: string;
-}
-
 const Nav: React.FC<NavProps> = ({ loggedIn, setLoggedIn }) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 

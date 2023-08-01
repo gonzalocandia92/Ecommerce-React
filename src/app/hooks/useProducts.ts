@@ -1,22 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
+import Product from "../interfaces/Product";
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  images: string[];
-  createdAt: string;
-  updatedAt: string;
-  category: {
-    id: number;
-    name: string;
-    image: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
 
 const fetchProducts = async (query: string) => {
   const response = await fetch(`https://api.escuelajs.co/api/v1/products${query}`);
@@ -28,7 +13,7 @@ const fetchProducts = async (query: string) => {
   return data as Product[];
 };
 
-const useProducts = (filterByCategory: string | undefined, categoryId?: string, ) => {
+const useProducts = (filterByCategory: boolean | undefined, categoryId?: string, ) => {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [priceMin, setPriceMin] = useState("");
@@ -57,12 +42,11 @@ const useProducts = (filterByCategory: string | undefined, categoryId?: string, 
   
     const [filteredProductsQuery, setFilteredProductsQuery] = useState("");
   
-    const { data: productsData, isLoading: isLoadingProducts, error: productsError } = useQuery<Product[]>(
+    const { data: productsData, isLoading: isLoadingProducts, error: productsError } = useQuery<Product[], Error>(
       ["products", filteredProductsQuery],
       () => fetchProducts(filteredProductsQuery)
     );
   
-    // Aplicar el filtro por categoría solo si filterByCategory es true y se proporciona un categoryId
     const filteredProducts = filterByCategory && categoryId ? productsData?.filter(product => product.category.id === parseInt(categoryId)) : productsData;
   
     return {

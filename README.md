@@ -2,4 +2,4 @@
 
 - Proyecto Final para el curso React JS del Informatorio Chaco
 
-### Actualmente finalizada la Etapa 3.
+### Actualmente finalizada la Etapa 5.

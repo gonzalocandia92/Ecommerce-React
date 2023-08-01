@@ -8,33 +8,16 @@ import CardChildren from "../../components/CardChildren";
 import useProducts from "../../hooks/useProducts";
 import useUpdateProduct from "../../hooks/useUpdateProduct";
 import useDeleteProduct from "../../hooks/useDeleteProduct";
-
+import Product from "../../interfaces/Product";
 import "./modalStyles.css";
 import { useQueryClient } from "react-query";
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  images: string[];
-  createdAt: string;
-  updatedAt: string;
-  category: {
-    id: number;
-    name: string;
-    image: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
 
 const ProductAdmin: React.FC = () => {
   const {
     productsData: data,
     isLoadingProducts,
     productsError: error,
-  } = useProducts('');
+  } = useProducts(false, '');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);

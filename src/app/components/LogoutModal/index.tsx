@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+import { useCartContext } from "../../hooks/CartContext";
 
 interface LogoutModalProps {
   setLoggedIn: (loggedIn: boolean) => void;
@@ -9,10 +10,12 @@ interface LogoutModalProps {
 
 const LogoutModal: React.FC<LogoutModalProps> = ({ setLoggedIn, handleCloseModal }) => {
   const navigate = useNavigate();
-
+  const { clearCart } = useCartContext();
+  
   const handleConfirmLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userData");
+    clearCart();
     setLoggedIn(false);
     handleCloseModal();
     navigate("/");
