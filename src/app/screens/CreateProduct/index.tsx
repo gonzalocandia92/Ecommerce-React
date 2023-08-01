@@ -49,7 +49,7 @@ const CreateProduct: React.FC = () => {
     setImageUrls(updatedImageUrls);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const productData = {
@@ -60,7 +60,12 @@ const CreateProduct: React.FC = () => {
       images: imageUrls.filter((url) => url !== ""),
     };
 
-    createProductMutation.mutate(productData);
+    try {
+      createProductMutation.mutate(productData);
+      setSuccess("Product created successfully");
+    } catch (error) {
+      setError("Failed to create product");
+    }
   };
 
   const handleAddAnotherProduct = () => {

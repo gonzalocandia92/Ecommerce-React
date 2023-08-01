@@ -1,17 +1,26 @@
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, UseMutationResult, MutationFunction } from "react-query";
 
-function useCreateProduct() {
+interface ProductData {
+  title: string;
+  price: number;
+  description: string;
+  categoryId: number;
+  images: string[];
+}
+
+type CustomMutationResult = UseMutationResult<
+  any,
+  unknown,
+  ProductData,
+  unknown
+>;
+
+function useCreateProduct(): CustomMutationResult {
   const [isLoading, setIsLoading] = useState(false);
 
   const createProductMutation = useMutation(
-    async (data: {
-      title: string;
-      price: number;
-      description: string;
-      categoryId: number;
-      images: string[];
-    }) => {
+    async (data: ProductData) => {
       setIsLoading(true);
       try {
         const res = await fetch("https://api.escuelajs.co/api/v1/products/", {
@@ -28,14 +37,14 @@ function useCreateProduct() {
 
         return await res.json();
       } catch (error: unknown) {
-        throw (error as Error).message;
+        throw ((error as Error).message);
       } finally {
         setIsLoading(false);
       }
     }
   );
 
-  return { createProductMutation, isLoading };
+  return createProductMutation;
 }
 
 export default useCreateProduct;
